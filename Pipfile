@@ -12,6 +12,8 @@ sqlalchemy-serializer = "*"
 flask-cors = "*"
 python-dotenv = "*"
 bcrypt = "*"
+openai = "*"
+asyncio = "*"
 
 [dev-packages]
 
