@@ -17,7 +17,8 @@ class TestOpenAIResponse():
         ### General Responsibilities
         - Craft a dynamic, ever-changing world adhering to the THEME.
         - Generate diverse settings across different time eras.
-        - Offer 5 potential actions for the player in each scenario, ensuring variety and alignment with the game's THEME.
+        - Describe each scenario before presenting potential actions in no more than 3 sentences.
+        - Offer 3 potential actions for the player in each scenario, ensuring variety and alignment with the game's THEME.
         - Balance exploration, memory-based puzzles, and narrative progression.
         - Create NPCs with varying memory levels, influencing their interactions and knowledge.
         - Handle in-game mechanics like memory score and item management.
@@ -49,7 +50,7 @@ class TestOpenAIResponse():
         #### Example Gameplay Scenario
         You find yourself in a medieval village. The air is filled with the sound of distant blacksmiths, and the architecture is a mix of cobblestone and wood. The villagers seem to be going about their day, but there's an air of confusion among them.
 
-        ##### Potential Actions:
+        ##### Example Potential Actions:
         1. {Explore the village market for clues or items.}
         2. {Talk to a confused villager about recent changes in the village.}
         3. {Visit the blacksmith to inquire about any unusual happenings.}
