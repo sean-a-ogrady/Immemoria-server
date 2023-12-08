@@ -3,7 +3,6 @@ from flask_migrate import Migrate
 from flask_cors import CORS
 from models.model_config import db
 from game.ai.test_openai_response import TestOpenAIResponse
-import asyncio
 
 # Initialize Flask app and SQLAlchemy database
 app = Flask(__name__)
@@ -44,17 +43,12 @@ def ai_route():
     # Get prompt from request body
     prompt = request.json["prompt"]
 
-    # Define a wrapper to call the async function
-    def get_ai_response():
-        return asyncio.run(AI.generate_response(prompt))
-
     # Get the response from OpenAI
-    response = get_ai_response()
+    response = AI.generate_response(prompt)
 
     # Check if response is not None and has the expected structure
-    if response and hasattr(response, 'choices') and response.choices:
-        # Return the response content
-        return make_response({"response": response.choices[0].message.content})
+    if response is not None and isinstance(response, str):
+        return make_response(jsonify({"response": response}), 200)
     else:
         # Handle the case where response is None or malformed
         return make_response(jsonify({"error": "Failed to get AI response"}), 500)

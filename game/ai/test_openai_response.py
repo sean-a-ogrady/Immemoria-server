@@ -59,7 +59,7 @@ class TestOpenAIResponse():
         As you navigate Immemoria, your choices will shape the world around you, influenced by the memories you choose to hold onto or let go of.
         """
 
-    async def generate_response(self, prompt):
+    def generate_response(self, prompt):
         """
         Generates a response from OpenAI's API.
 
@@ -75,7 +75,7 @@ class TestOpenAIResponse():
                 ],
                 max_tokens=1000
             )
-            return response
+            return response.choices[0].message.content
         except Exception as e:
             print(f"Encountered an error while generating response: {e}")
             return None
