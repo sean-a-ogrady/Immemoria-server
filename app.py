@@ -48,6 +48,9 @@ def ai_route():
 
     # Check if response is not None and has the expected structure
     if response is not None and isinstance(response, str):
+        # Add the prompt and response to the conversation history
+        AI.add_to_conversation_history(prompt, response)
+        # Return the response
         return make_response(jsonify({"response": response}), 200)
     else:
         # Handle the case where response is None or malformed
