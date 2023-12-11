@@ -78,7 +78,7 @@ You find yourself in a medieval village. The air is filled with the sound of dis
         # Add a label for the conversation history
         system_role += "\n\n### Conversation History:"
         for entry in self.conversation_history:
-            system_role += f"\n#### Prompt:\n{entry['prompt']}\n#### Response:\n{entry['response']}\n---"
+            system_role += f"---\n#### Prompt:\n{entry['prompt']}\n#### Response:\n{entry['response']}\n"
 
         print(system_role)
         try: 
