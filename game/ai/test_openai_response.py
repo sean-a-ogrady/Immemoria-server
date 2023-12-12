@@ -158,6 +158,7 @@ Based on the interaction that the user will provide, summarize the current state
                 max_tokens=1000
             )
             self.summary = response.choices[0].message.content
+            return self.summary
         except Exception as e:
             print(f"Encountered an error while generating response: {e}")
             return None
@@ -166,3 +167,7 @@ Based on the interaction that the user will provide, summarize the current state
     def clear_conversation_history(self):
         """Clears the conversation history."""
         self.conversation_history = []
+
+    def clear_summary(self):
+        """Clears the summary."""
+        self.summary = ""

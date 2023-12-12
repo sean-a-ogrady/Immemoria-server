@@ -63,6 +63,8 @@ def ai_route():
 def ai_reset():
     # Reset the conversation history
     AI.clear_conversation_history()
+    # Reset the summary
+    AI.clear_summary()
     # Return a success response
     return make_response(jsonify({"message": "Conversation history reset"}), 200)
 
