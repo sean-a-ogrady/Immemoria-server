@@ -50,8 +50,10 @@ def ai_route():
     if response is not None and isinstance(response, str):
         # Add the prompt and response to the conversation history
         AI.add_to_conversation_history(prompt, response)
+        # Add the prompt and response to the summary
+        summary = AI.add_to_summary(prompt, response)
         # Return the response
-        return make_response(jsonify({"response": response}), 200)
+        return make_response(jsonify({"response": response, "summary": summary}), 200)
     else:
         # Handle the case where response is None or malformed
         return make_response(jsonify({"error": "Failed to get AI response"}), 500)
@@ -78,4 +80,4 @@ def not_found(error):
 ########################################################################
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, threaded=True)
