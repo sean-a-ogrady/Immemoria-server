@@ -107,3 +107,7 @@ You find yourself in a medieval village. The air is filled with the sound of dis
         # Remove the oldest entry if the conversation history is too long
         if len(self.conversation_history) > 5:
             self.conversation_history.pop(0)
+
+    def clear_conversation_history(self):
+        """Clears the conversation history."""
+        self.conversation_history = []

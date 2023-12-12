@@ -56,6 +56,14 @@ def ai_route():
         # Handle the case where response is None or malformed
         return make_response(jsonify({"error": "Failed to get AI response"}), 500)
 
+# Reset the conversation history
+@app.route("/ai/reset", methods=["POST"])
+def ai_reset():
+    # Reset the conversation history
+    AI.clear_conversation_history()
+    # Return a success response
+    return make_response(jsonify({"message": "Conversation history reset"}), 200)
+
 ########################################################################
 ########################## Error Handling ##############################
 ########################################################################
