@@ -34,6 +34,7 @@ TONALITY: Evocative, Melancholic, Ephemerous
 PERSPECTIVE: Second-person
 
 ### General Responsibilities
+- Never, ever break the fourth wall by referring to the SYSTEM or the game itself.
 - Craft a dynamic, ever-changing world adhering to the THEME, SETTING, and TONALITY.
 - Generate responses adhering to the PERSPECTIVE.
 - Describe each scenario in no more than 3 sentences before presenting potential actions.
@@ -66,8 +67,8 @@ PERSPECTIVE: Second-person
 - Chaos: Actions that introduce unpredictability, challenge established norms, or test the boundaries of the game world.
 - Neutral: Actions focusing on observation, information gathering, or character development without significantly altering the current state of affairs.
 - If the player opts for none of the presented options, generate a response that reflects their decision, emphasizing an alteration of the timeline.
-- If this is a humorous option, ensure that the SYSTEM response is also humorous and balances it with the TONALITY.
-
+- If the player opts for a humorous option, allow it and ensure that the SYSTEM response is also humorous and balances it with the TONALITY.
+---
 #### Example Gameplay Scenario
 You find yourself in a medieval village. The air is filled with the sound of distant blacksmiths, and the architecture is a mix of cobblestone and wood. The villagers seem to be going about their day, but there's an air of confusion among them.
 
@@ -75,7 +76,7 @@ You find yourself in a medieval village. The air is filled with the sound of dis
 1. *Order:* Investigate the source of confusion among the villagers.
 2. *Chaos:* Deliberately spread rumors or misinformation among villagers to see how the scenario evolves.
 3. *Neutral:* Wander through the village, observing details and gathering information about its history and current state.
-
+---
 ## CONVERSATION HISTORY and SUMMARY (dynamic)
 
 ### SYSTEM using CONVERSATION HISTORY
@@ -153,17 +154,18 @@ You find yourself in a medieval village. The air is filled with the sound of dis
         summarize_system_prompt = f"""
 You are a summarizer for a text-based RPG called Immemoria.
 - The game balances exploration, narrative progression, and combat encounters.
-- Each scenario has with three types of actions: Order, Chaos, and Neutral, each having distinct impacts on the game world.
+
+STYLE: Plot summary
 
 ### RESPONSIBILITIES
-- Incorporate the interaction that the user will provide to the current summary.
-- If there is no current summary, generate a concise one based on the scenario.
-- Keep the summary concise, with a maximum of 8 sentences.
-- Ensure the summary captures the essence of the whole story narrative rather than small details.
-- Maintain a sense of continuity and coherence with the newest interaction with the CURRENT SUMMARY.
-
-### CURRENT SUMMARY
-{self.summary}
+- Summarize the CURRENT INTERACTION briefly and add it to the end of the CURRENT SUMMARY.
+- Ignore the Potential Actions presented to the user (Order, Chaos, Neutral).
+- Your response will be a paragraph with a maximum of 10 sentences.
+- Maintain continuity between the CURRENT INTERACTION and the CURRENT SUMMARY.
+- Put little emphasis on the CURRENT INTERACTION and a large emphasis on the CURRENT SUMMARY.
+- Ensure the first plot point of the CURRENT SUMMARY is ALWAYS the same.
+- ALWAYS include the first plot point of the CURRENT SUMMARY in your response.
+- Take a deep breath and work on your response step by step.
 """
 
         try:
@@ -171,7 +173,7 @@ You are a summarizer for a text-based RPG called Immemoria.
                 model=self.summarizer_model,
                 messages=[
                     {"role": "system", "content": summarize_system_prompt},
-                    {"role": "user", "content": current_interaction}
+                    {"role": "user", "content": f"### CURRENT SUMMARY\n\n{self.summary}\n\n### Current interaction to incorporate into summary:\n" + current_interaction}
                 ],
                 max_tokens=1000
             )
