@@ -43,8 +43,8 @@ def ai_route():
     # Get prompt from request body
     prompt = request.json["prompt"]
 
-    if request.json["initialize"]:
-        pass
+    # if request.json["initialize"]:
+    #     pass
 
     # Get the response from OpenAI
     response = AI.generate_response(prompt)
