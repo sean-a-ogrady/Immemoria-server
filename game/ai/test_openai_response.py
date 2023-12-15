@@ -173,7 +173,7 @@ STYLE: Plot summary
                 model=self.summarizer_model,
                 messages=[
                     {"role": "system", "content": summarize_system_prompt},
-                    {"role": "user", "content": f"### CURRENT SUMMARY\n\n{self.summary}\n\n### Current interaction to incorporate into summary:\n" + current_interaction}
+                    {"role": "user", "content": f"### CURRENT SUMMARY\n\n{self.summary}\n\n### CURRENT INTERACTION:\n" + current_interaction}
                 ],
                 max_tokens=1000
             )

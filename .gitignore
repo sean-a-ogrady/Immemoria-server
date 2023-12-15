@@ -1,3 +1,4 @@
 Pipfile.lock
 .venv
 .env
+*instructor_test.py
