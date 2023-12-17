@@ -2,7 +2,7 @@ from flask import Flask, make_response, session, jsonify, request
 from flask_migrate import Migrate
 from flask_cors import CORS
 from models.model_config import db
-from game.ai.test_openai_response import TestOpenAIResponse
+from ai.test_openai_response import TestOpenAIResponse
 
 # Initialize Flask app and SQLAlchemy database
 app = Flask(__name__)

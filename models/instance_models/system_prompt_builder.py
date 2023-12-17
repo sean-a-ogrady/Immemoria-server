@@ -1,3 +1,4 @@
+# NOTE: DEPRECATED
 class SystemPromptBuilder:
     def __init__(self, system_role: str = "", directions: str = "", context: list = [], max_chat_context_length: int = 5, additional_instructions: str = ""):
         # Initialize variables to store different parts of the prompt
