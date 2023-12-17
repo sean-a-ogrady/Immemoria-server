@@ -3,7 +3,7 @@ from instructor import patch, OpenAISchema
 from pydantic import Field
 import os
 from dotenv import load_dotenv
-from system_prompt_builder import SystemPromptBuilder
+from ai.system_prompt_builder import SystemPromptBuilder
 
 ##################################
 ############ SCHEMA ##############
@@ -58,12 +58,12 @@ class ImmemoriaAI():
         self.model = "gpt-4-1106-preview" # gpt-3.5-turbo-1106
         load_dotenv()
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        self.client = patch(client)
+        self.client = patch(self.client)
         
     def generate_response(self, player_prompt: str, conversation_history: list, summary: list):
         system_prompt = SystemPromptBuilder.construct_default_gameplay_loop_prompt(conversation_history, summary)
         # Send request to OpenAI with structured system prompt and response model
-        response: Scenario = client.chat.completions.create(
+        response: Scenario = self.client.chat.completions.create(
             model="gpt-4-1106-preview",
             response_model=Scenario,
             messages=[
@@ -71,4 +71,4 @@ class ImmemoriaAI():
                 {"role": "user", "content": player_prompt},
             ],
         )
-        return response.model_dump_json()
+        return response # .model_dump_json()

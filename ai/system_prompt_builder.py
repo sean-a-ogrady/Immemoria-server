@@ -69,7 +69,7 @@ PERSPECTIVE: Second-person
         conversation_history_string = "\n".join([f"PLAYER: {entry['player']}\nSYSTEM: {entry['system']}" for entry in conversation_history])
 
         # Create a bulleted list of the summary events
-        summary = "\n".join([f"- {item}" for item in summary])
+        summary_string = "\n".join([f"- {item}" for item in summary])
 
         # Add to the conversation history and summary section
         conversation_history_and_summary = f"""
@@ -93,9 +93,8 @@ PERSPECTIVE: Second-person
 ### CONVERSATION HISTORY
 {conversation_history_string}
 """
-        # Join the strings and return
-        return system_prompt.join(conversation_history_and_summary)
-
+        # Concatenate the strings and return
+        return system_prompt + conversation_history_and_summary
 
     # Game Initialization
     # def construct_game_initialization_prompt(settings)
