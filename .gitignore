@@ -3,3 +3,5 @@ Pipfile.lock
 .env
 *instructor_test.py
 *__pycache__
+*example_architecture.py
+*immemoria_instructor_v1.py
