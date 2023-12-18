@@ -44,20 +44,19 @@ def ai_route():
 
     # Get prompt from request body
     # TODO: Error Handling
+    # TODO: Handle conversation history and summary through database once implemented
     prompt = request.json["prompt"]
-    # conversation_history = request.json["conversation_history"]
-    # summary = request.json["summary"]
 
     # if request.json["initialize"]:
     #     pass
 
     # Get the response from OpenAI
-    response = AI.generate_response(prompt, [], [])
+    response = AI.generate_response(prompt)
 
     # Check if response is not None and has the expected structure
-    if response is not None: # and isinstance(response, str):
+    if response is not None and isinstance(response, dict):
         # Return the response
-        return make_response(jsonify({"response": response.description, "summary": ""}), 200)
+        return make_response(jsonify(response), 200)
     else:
         # Handle the case where response is None or malformed
         return make_response(jsonify({"error": "Failed to get AI response"}), 500)

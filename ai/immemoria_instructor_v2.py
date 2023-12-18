@@ -59,9 +59,12 @@ class ImmemoriaAI():
         load_dotenv()
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self.client = patch(self.client)
+        ##### TEMPORARY VARIABLES #####
+        self.conversation_history = []
+        self.summary = []
         
-    def generate_response(self, player_prompt: str, conversation_history: list, summary: list):
-        system_prompt = SystemPromptBuilder.construct_default_gameplay_loop_prompt(conversation_history, summary)
+    def generate_response(self, player_prompt: str):
+        system_prompt = SystemPromptBuilder.construct_default_gameplay_loop_prompt(self.conversation_history, self.summary)
         # Send request to OpenAI with structured system prompt and response model
         response: Scenario = self.client.chat.completions.create(
             model="gpt-4-1106-preview",
@@ -71,4 +74,55 @@ class ImmemoriaAI():
                 {"role": "user", "content": player_prompt},
             ],
         )
-        return response # .model_dump_json()
+        self.add_to_summary(response.summary)
+        response_with_full_summary = response.model_dump()
+        response_with_full_summary["summary"] = self.get_summary()
+        return response_with_full_summary
+
+    ################# TEMPORARY FUNCTIONS #################
+    # TODO: These will be handled through the database in immemoria_instructor_v3.PlayerOptions
+
+    def add_to_conversation_history(self, prompt, response):
+        """
+        Adds a prompt and response to the conversation history.
+
+        Parameters:
+            prompt (str): The prompt to add to the conversation history.
+            response (str): The response to add to the conversation history.
+        """
+        self.conversation_history.append({"prompt": prompt, "response": response})
+        # Remove the oldest entry if the conversation history is too long
+        if len(self.conversation_history) > 5:
+            self.conversation_history.pop(0)
+
+    def add_to_summary(self, sentence):
+        """
+        Adds detail about the current interaction to the summary
+
+        Takes in a prompt and response, sends them to the OpenAI API with the
+        current summary, and returns the new summary.
+
+        The summary should never exceed two paragraphs.
+        """
+        self.summary.append(sentence)
+        # Remove the oldest entry if the summary is too long
+        if len(self.summary) > 10:
+            self.summary.pop(0)
+
+    def get_summary(self):
+        """
+        Returns the summary.
+        """
+        return self.summary
+
+    def clear_conversation_history(self):
+        """
+        Clears the conversation history.
+        """
+        self.conversation_history = []
+
+    def clear_summary(self):
+        """
+        Clears the summary.
+        """
+        self.summary = []

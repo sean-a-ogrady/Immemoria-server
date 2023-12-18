@@ -73,6 +73,7 @@ PERSPECTIVE: Second-person
 
         # Add to the conversation history and summary section
         conversation_history_and_summary = f"""
+        
 # CONVERSATION HISTORY and SUMMARY (dynamic)
 
 ## SYSTEM using SUMMARY
