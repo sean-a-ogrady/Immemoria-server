@@ -2,7 +2,8 @@ from flask import Flask, make_response, session, jsonify, request
 from flask_migrate import Migrate
 from flask_cors import CORS
 from models.model_config import db
-from game.ai.test_openai_response import TestOpenAIResponse
+from ai.test_openai_response import TestOpenAIResponse
+from ai.immemoria_instructor_v2 import ImmemoriaAI
 
 # Initialize Flask app and SQLAlchemy database
 app = Flask(__name__)
@@ -15,7 +16,7 @@ CORS(app, supports_credentials=True)
 app.secret_key = "secret" # TODO: Change this to something more secure, like a randomly generated UUID
 
 # Testing code for OpenAI response
-AI = TestOpenAIResponse()
+AI = ImmemoriaAI() # TestOpenAIResponse()
 
 ########################################################################
 ########################### API entry point ############################
@@ -40,7 +41,10 @@ def auth():
 # Test endpoint for generating AI response
 @app.route("/ai", methods=["POST"])
 def ai_route():
+
     # Get prompt from request body
+    # TODO: Error Handling
+    # TODO: Handle conversation history and summary through database once implemented
     prompt = request.json["prompt"]
 
     # if request.json["initialize"]:
@@ -50,13 +54,9 @@ def ai_route():
     response = AI.generate_response(prompt)
 
     # Check if response is not None and has the expected structure
-    if response is not None and isinstance(response, str):
-        # Add the prompt and response to the conversation history
-        AI.add_to_conversation_history(prompt, response)
-        # Add the prompt and response to the summary
-        summary = AI.add_to_summary(prompt, response)
+    if response is not None and isinstance(response, dict):
         # Return the response
-        return make_response(jsonify({"response": response, "summary": summary}), 200)
+        return make_response(jsonify(response), 200)
     else:
         # Handle the case where response is None or malformed
         return make_response(jsonify({"error": "Failed to get AI response"}), 500)
