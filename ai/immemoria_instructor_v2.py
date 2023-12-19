@@ -74,7 +74,7 @@ class ImmemoriaAI():
                 {"role": "user", "content": player_prompt},
             ],
         )
-        self.add_to_summary(response.summary)
+        self.add_to_summary(response.summary + " ")
         response_with_full_summary = response.model_dump()
         response_with_full_summary["summary"] = self.get_summary()
         return response_with_full_summary
