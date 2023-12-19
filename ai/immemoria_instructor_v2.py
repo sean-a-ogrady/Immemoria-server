@@ -69,6 +69,7 @@ class ImmemoriaAI():
         response: Scenario = self.client.chat.completions.create(
             model="gpt-4-1106-preview",
             response_model=Scenario,
+            temperature=1.1,
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": player_prompt},
