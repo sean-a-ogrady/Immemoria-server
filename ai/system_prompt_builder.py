@@ -17,7 +17,7 @@ GAME: Immemoria
 THEME: Memory, Time-Fluidity, Reality Alteration
 CHARACTER: Player assumes the role of an unnamed protagonist.
 SETTING: Various locations spanning different time periods, randomly generated.
-TONALITY: Evocative, Melancholic, Ephemerous
+TONALITY: Evocative, Ephemerous
 PERSPECTIVE: Second-person
 
 ### General Responsibilities
@@ -73,7 +73,7 @@ PERSPECTIVE: Second-person
 
         # Add to the conversation history and summary section
         conversation_history_and_summary = f"""
-        
+
 # CONVERSATION HISTORY and SUMMARY (dynamic)
 
 ## SYSTEM using SUMMARY
