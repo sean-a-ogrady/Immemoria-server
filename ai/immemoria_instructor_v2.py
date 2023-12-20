@@ -27,6 +27,7 @@ class PlayerOptions(OpenAISchema):
     """
 Player options for a scenario in Immemoria.
 One action should be Order, one should be Chaos, and one should be Neutral.
+Actions vary significantly from previous scenarios.
     """
     order: str = Field(..., description="Order action option for the player.")
     chaos: str = Field(..., description="Chaos action option for the player.")
@@ -36,14 +37,14 @@ One action should be Order, one should be Chaos, and one should be Neutral.
 # Main response schema
 class Scenario(OpenAISchema):
     """
-Defines a scenario in the game Immemoria, including the description, player options, and a summary.
+Defines a scenario in the game Immemoria, including the description, player actions, and a summary.
+The description is a succinct description of the current scenario in Immemoria that the player must react to.
 Each `Scenario` is no more than 3 sentences.
 Each `Scenario` has 3 potential `PlayerOptions` in each scenario.
-The summary is a succinct long-term narrative overview, capturing key developments and player decisions.
     """
     description: str = Field(..., description="Three-sentence description of the current scenario in Immemoria.")
     actions: PlayerOptions = Field(..., description="Options available to the player in the scenario.")
-    summary: str = Field(..., description="One-sentence summary of the player's action and its result.")
+    summary: str = Field(..., description="One-sentence summary of the PLAYER's action and its result.")
 
 
 ##################################
@@ -69,7 +70,7 @@ class ImmemoriaAI():
         response: Scenario = self.client.chat.completions.create(
             model="gpt-4-1106-preview",
             response_model=Scenario,
-            temperature=1.1,
+            temperature=1,
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": player_prompt},
