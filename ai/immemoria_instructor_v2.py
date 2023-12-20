@@ -39,6 +39,7 @@ class Scenario(OpenAISchema):
     """
 Defines a scenario in the game Immemoria, including the description, player actions, and a summary.
 The description is a succinct description of the current scenario in Immemoria that the player must react to.
+The player does not always get a favorable outcome for the description.
 Each `Scenario` is no more than 3 sentences.
 Each `Scenario` has 3 potential `PlayerOptions` in each scenario.
     """
